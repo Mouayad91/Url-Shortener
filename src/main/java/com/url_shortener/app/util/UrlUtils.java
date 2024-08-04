@@ -4,8 +4,14 @@ import com.url_shortener.app.constants.Constants;
 
 public class UrlUtils {
 
-
+/**
+ * Generates short URL using base64 characters.
+ *
+ * @return short URL with length of 6 
+ */
     public static String generateShortUrl() {
+        
+        // construct a StringBuilder to hold the result
         StringBuilder sb = new StringBuilder(Constants.LENGTH);
 
         for (int i = 0; i < Constants.LENGTH; i++) {
@@ -15,4 +21,7 @@ public class UrlUtils {
         return sb.toString();
     
 }
+
+
+
 }

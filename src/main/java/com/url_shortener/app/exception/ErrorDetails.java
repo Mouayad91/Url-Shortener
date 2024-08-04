@@ -10,16 +10,14 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+
+/**
+ * Encapsulates error details for a given exception.
+ */
 public class ErrorDetails {
     
-    private LocalDateTime timestamp;
-    private String message;
+    private LocalDateTime timestamp; 
+    private String message; 
     private String details;
-
-    
-
-
-
-
 
 }

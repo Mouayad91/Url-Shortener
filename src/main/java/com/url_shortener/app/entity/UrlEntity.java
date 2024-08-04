@@ -3,9 +3,8 @@ package com.url_shortener.app.entity;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-import javax.validation.constraints.NotBlank;
-
 import org.springframework.format.annotation.DateTimeFormat;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -23,6 +22,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @Entity
 @Table(name = "urls")
+
+//Entity for storing URL data in the database.
 public class UrlEntity {
     
     @Id
