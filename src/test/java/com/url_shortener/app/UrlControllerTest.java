@@ -14,8 +14,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.url_shortener.app.service.UrlService;
-
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -24,12 +24,15 @@ public class UrlControllerTest {
     @Autowired // Inject the MockMvc object to simulate HTTP Requests
     private MockMvc mockMvc;
 
-    @MockBean     // To Mock the UrlService bean
+    @MockBean // To Mock the UrlService bean
     private UrlService urlService;
+
+    private ObjectMapper objectMapper;
 
     @BeforeEach
     public void setup() {
-       // a set of mocked data
+        objectMapper = new ObjectMapper();
+        // Mocked data
         String shortUrl = "AbCdEf";
         String originalUrl = "http://google.com";
         given(urlService.getOriginalUrl(shortUrl)).willReturn(originalUrl);
@@ -50,11 +53,14 @@ public class UrlControllerTest {
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl(expectedOriginalUrl));
     }
+
     @Test
-    public void deleteExpiredUrls() throws Exception {
+    public void testDeleteExpiredUrls() throws Exception {
         mockMvc.perform(delete("/expired"))
                .andExpect(status().isNoContent());
     }
 
+    
 
+   
 }

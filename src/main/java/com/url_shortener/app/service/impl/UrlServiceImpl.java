@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import com.url_shortener.app.dto.UrlDto;
 import com.url_shortener.app.entity.UrlEntity;
+import com.url_shortener.app.exception.DuplicateUrlException;
 import com.url_shortener.app.exception.ResourceNotFoundException;
 import com.url_shortener.app.exception.UrlApiException;
 import com.url_shortener.app.mapper.UrlMapper;
@@ -51,12 +52,16 @@ public class UrlServiceImpl implements UrlService {
             }
         }
 
+        
+        UrlEntity existing = urlRepository.findByOriginalUrl(urlDto.getOriginalUrl());
+        if (existing != null) {
+            throw new DuplicateUrlException("Original URL has already been shortened.");
+        }
+
         // create a unique short URL
         String shortUrl = UrlUtils.generateShortUrl();
 
-        // if URL already exists
-        UrlEntity existing = urlRepository.findByOriginalUrl(urlDto.getOriginalUrl());
-
+       
         if(existing != null) {
             return UrlMapper.mapToUrlDto(existing);
         }

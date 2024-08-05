@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.url_shortener.app.dto.UrlDto;
+import com.url_shortener.app.exception.DuplicateUrlException;
 import com.url_shortener.app.exception.ResourceNotFoundException;
 import com.url_shortener.app.exception.UrlApiException;
 import com.url_shortener.app.service.UrlService;
@@ -48,14 +49,26 @@ public class UrlController {
      * @return ResponseEntity with created URL or error message if something went wrong
      */
     @PostMapping("")
-    public ResponseEntity<UrlDto> generateShortenUrl(@Valid @RequestBody UrlDto urlDto) {
-        try {
-            UrlDto createdUrl = urlService.createShortUrl(urlDto); // Generating short URL
+    public ResponseEntity<?> generateShortenUrl(@Valid @RequestBody UrlDto urlDto) {
+             try {
+            UrlDto createdUrl = urlService.createShortUrl(urlDto);
             createdUrl.setShortUrl("http://localhost:8080/" + createdUrl.getShortUrl());
             return new ResponseEntity<>(createdUrl, HttpStatus.CREATED);
+        } catch (DuplicateUrlException e) {
+            logger.error("Duplicated original URL", e);
+            Map<String, String> response = new HashMap<>();
+            response.put("message", e.getMessage());
+            return new ResponseEntity<>(response, HttpStatus.CONFLICT);
+        } catch (UrlApiException e) {
+            logger.error("Error while generating short URL", e);
+            Map<String, String> response = new HashMap<>();
+            response.put("message", e.getMessage());
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
-            logger.error("Something went wrong while generating short URL", e);
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            logger.error("Unexpected error while generating short URL", e);
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "Unexpected error occurred");
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -104,7 +117,7 @@ public class UrlController {
      * @param id
      * @return URL details
      */
-    @GetMapping("{id}")
+    @GetMapping("id/{id}")
     public ResponseEntity<UrlDto> getUrlById(@PathVariable("id") Long id) {
         try {
             UrlDto urlDto = urlService.getUrlById(id);
@@ -194,7 +207,7 @@ public ResponseEntity<Map<String, String>> deleteUrlById(@PathVariable("id") Lon
     catch (Exception e) {
         logger.error("Error while deleting URL", e);
         Map<String, String> response = new HashMap<>();
-        response.put("message", "An error occurred while deleting the URL");
+        response.put("message", "Something went wrong while deleting the URL");
         return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
