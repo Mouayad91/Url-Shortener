@@ -184,7 +184,7 @@ public ResponseEntity<?> updateUrl(@RequestBody UrlDto urlDto, @PathVariable("id
 
         List<UrlDto> urlDtos = urlService.getAllUrlList();
         return new ResponseEntity<>(urlDtos, HttpStatus.OK);
-        
+
     }
 
     /**

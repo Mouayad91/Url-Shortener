@@ -9,8 +9,6 @@ import com.url_shortener.app.entity.UrlEntity;
  * Mapper to convert between UrlDto and UrlEntity objects.
  */
 public class UrlMapper {
-
-
     /**
      * Convert UrlDto to UrlEntity.
      * @param urlDto
@@ -28,9 +26,7 @@ public class UrlMapper {
         );
 
         return urlEntity;
-
     }
-
     /**
      * Convert UrlEntity to UrlDto.
      * @param urlEntity
@@ -48,7 +44,6 @@ public class UrlMapper {
         return urlDto;
 
     }
-
     /**
      * Convert String TTL to LocalDate.
      * @param ttl

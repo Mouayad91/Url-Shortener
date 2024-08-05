@@ -99,7 +99,6 @@ public class UrlServiceImpl implements UrlService {
         if (urlEntity == null) {
             throw new ResourceNotFoundException("URL not found or expired");
         }
-
         return urlEntity.getOriginalUrl();   
     
     }
@@ -192,7 +191,6 @@ public class UrlServiceImpl implements UrlService {
         // find and delete the URL by ID
         UrlEntity urlEntity = urlRepository.findById(id).
         orElseThrow(() -> new ResourceNotFoundException("URL not found with id: " + id));
-
         urlRepository.delete(urlEntity);
 
 
@@ -204,9 +202,7 @@ public class UrlServiceImpl implements UrlService {
         
         // find all URLs in the database and return them as a list of UrlDtos
         List<UrlEntity> urlEntities = urlRepository.findAll();
-        return 
-
-        urlEntities.stream()
+        return urlEntities.stream()
         .map((url)->UrlMapper.mapToUrlDto(url))
         .collect(Collectors.toList());
 

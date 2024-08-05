@@ -30,10 +30,8 @@ public class UrlServiceImplTest {
 
     @Mock
     private UrlRepository urlRepository;
-
     @InjectMocks
     private UrlServiceImpl urlService;
-
     private UrlEntity urlEntity;
     private UrlDto urlDto;
 
@@ -44,7 +42,6 @@ public class UrlServiceImplTest {
         urlEntity.setOriginalUrl("http://google.com");
         urlEntity.setShortUrl("AbCdEf");
         urlEntity.setCreatedAt(LocalDateTime.now());
-
         urlDto = new UrlDto();
         urlDto.setOriginalUrl("http://google.com");
         urlDto.setTtl("5");
@@ -54,9 +51,7 @@ public class UrlServiceImplTest {
     public void testCreateShortUrl() {
         when(urlRepository.findByOriginalUrl(anyString())).thenReturn(null);
         when(urlRepository.save(any(UrlEntity.class))).thenReturn(urlEntity);
-
         UrlDto createdUrl = urlService.createShortUrl(urlDto);
-
         assertNotNull(createdUrl);
         assertEquals("http://google.com", createdUrl.getOriginalUrl());
         verify(urlRepository, times(1)).findByOriginalUrl(anyString());
@@ -66,9 +61,7 @@ public class UrlServiceImplTest {
     @Test
     public void testDeleteUrlById() {
         when(urlRepository.findById(anyLong())).thenReturn(Optional.of(urlEntity));
-
         urlService.deleteUrlById(1L);
-
         verify(urlRepository, times(1)).findById(1L);
         verify(urlRepository, times(1)).delete(urlEntity);
     }
@@ -76,7 +69,6 @@ public class UrlServiceImplTest {
     @Test
     public void testDeleteUrlByNotExistingId() {
         when(urlRepository.findById(anyLong())).thenReturn(Optional.empty());
-
         ResourceNotFoundException exception = assertThrows(ResourceNotFoundException.class, () -> {
             urlService.deleteUrlById(1L);
         });

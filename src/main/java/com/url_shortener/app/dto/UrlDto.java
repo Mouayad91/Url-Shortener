@@ -28,8 +28,7 @@ public class UrlDto {
    
     private LocalDateTime createdAt;
    
-    // Time-to-Live (TTL) in days, must be a positive number
-   @Min(value = 0, message = "Time-to-Live must be a positive number")
-   @Pattern(regexp = "^[0-9]+$", message = "Time-to-Live must be a valid number")
+    @Min(value = 0, message = "Time-to-Live must be a positive number")
+    @Pattern(regexp = "^[0-9]+$", message = "Time-to-Live must be a valid number")
     private String ttl;
 }

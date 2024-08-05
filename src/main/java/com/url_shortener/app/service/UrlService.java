@@ -11,7 +11,6 @@ public interface UrlService {
     String getOriginalUrl(String shortUrl);
     void deleteExpiredUrls();
     void deleteUrl(String shortUrl);
-
     UrlDto getUrlById(Long id);
     UrlDto updateUrl(UrlDto urlDto, Long id);
     void deleteUrlById(Long id);

@@ -47,8 +47,6 @@ public class UrlControllerTest {
     public void testGetShortUrl() throws Exception {
         String shortUrl = "AbCdEf";
         String expectedOriginalUrl = "http://google.com";
-
-        // Test the redirect to original URL
         mockMvc.perform(get("/" + shortUrl))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl(expectedOriginalUrl));
