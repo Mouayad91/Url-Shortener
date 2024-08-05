@@ -14,7 +14,7 @@ public class PerformanceAspect {
     private static final Logger LOGGER = LoggerFactory.getLogger(PerformanceAspect.class);
 
 
-    @Around("execution(* com.url_shortener.app.service.impl.UrlServiceImpl.*(..)))")
+    @Around("execution(* com.url_shortener.app.service.impl.UrlServiceImpl.*(..))")
     public Object monitorTime(ProceedingJoinPoint jp) throws Throwable {
         long startTime = System.currentTimeMillis();
        Object obj =  jp.proceed();

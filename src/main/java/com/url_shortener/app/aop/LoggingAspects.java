@@ -28,13 +28,13 @@ public class LoggingAspects {
 
     @AfterThrowing("execution(* com.url_shortener.app.service.impl.UrlServiceImpl.*(..))")
     public void logMethodCrashed(JoinPoint joinPoint) {
-    LOGGER.info("** METHOD HAS SOME ISSUES: " + joinPoint.getSignature().getName()+ "**");
+    LOGGER.info("** METHOD HAS SOME ISSUES: " + joinPoint.getSignature().getName());
     }
 
 
     @AfterReturning("execution(* com.url_shortener.app.service.impl.UrlServiceImpl.*(..))")
     public void logMethodExecutedSuccess(JoinPoint joinPoint) {
-    LOGGER.info("** METHOD EXECUTED SUCCESSFULLY: " + joinPoint.getSignature().getName());
+    LOGGER.info("** METHOD EXECUTED AND RETURNED SUCCESSFULLY: " + joinPoint.getSignature().getName());
     }
 
 

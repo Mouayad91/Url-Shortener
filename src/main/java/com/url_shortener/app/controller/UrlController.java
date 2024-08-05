@@ -100,13 +100,15 @@ public class UrlController {
      * @param shortUrl
      * @return
      */
-    @DeleteMapping("{shortUrl}")
+    @DeleteMapping("short/{shortUrl}")
     public ResponseEntity<Void> deleteUrl(@PathVariable("shortUrl") String shortUrl) {
         try {
             urlService.deleteUrl(shortUrl);
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            logger.info("URL deleted from short URL successfully: " + shortUrl);
+            return new ResponseEntity<>( HttpStatus.NO_CONTENT);
+
         } catch (Exception e) {
-            logger.error("Error while deleting URL", e);
+            logger.error("Something went wrong while deleting URL", e);
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
