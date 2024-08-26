@@ -151,8 +151,5 @@ The application has the following endpoints:
 - [Lombok](https://projectlombok.org/)
 - [PostgreSQL](https://www.postgresql.org/)
 
-## Contributing
-
-Pull requests are welcome  ^_^.
 
 ## ENJOY
